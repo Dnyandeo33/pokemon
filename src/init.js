@@ -1,3 +1,5 @@
-import loadEvent from './events/loadEvent.js';
+import clickEvent from './events/clickEvent.js';
+import keyupEvent from './events/keyupEvent.js';
 
-loadEvent();
+clickEvent();
+keyupEvent();
