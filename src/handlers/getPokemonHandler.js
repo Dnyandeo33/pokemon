@@ -12,11 +12,13 @@ const getPokemonHandler = async () => {
         return;
     }
 
-    const isValid = value > 0;
+    const isValid = value > 0 || value === null;
     // validate value and throw error
     if (!isValid) {
         const existPokemonContainer = dom.root.querySelector('.pokemon-container');
-        existPokemonContainer.remove();
+        if (existPokemonContainer) {
+            existPokemonContainer.remove();
+        }
         dom.errorDiv.className = 'error';
         dom.errorDiv.innerText = 'Please provide valid id';
         dom.root.append(dom.errorDiv);
