@@ -6,19 +6,18 @@ import dom from '../dom.js';
 
 const getPokemonHandler = async () => {
     const value = Number(dom.input.value);
+    const existPokemonContainer = dom.root.querySelector('.pokemon-container');
 
     // check old value and new value
     if (data.oldId === value) {
         return;
     }
 
-    const isValid = value > 0 || value === null;
+    const isValid = value > 0 && value < 1280;
     // validate value and throw error
     if (!isValid) {
-        const existPokemonContainer = dom.root.querySelector('.pokemon-container');
-        if (existPokemonContainer) {
-            existPokemonContainer.remove();
-        }
+        existPokemonContainer.remove();
+        data.oldId = null;
         dom.errorDiv.className = 'error';
         dom.errorDiv.innerText = 'Please provide valid id';
         dom.root.append(dom.errorDiv);
@@ -33,14 +32,7 @@ const getPokemonHandler = async () => {
 
     // get the data from api & validate
     const pokemonData = await getPokemonData(value);
-    if (!pokemonData) {
-        dom.errorDiv.innerText = 'Please provide valid id';
-        dom.root.append(dom.errorDiv);
-        return;
-    }
 
-    // check exist pokemon dom & update
-    const existPokemonContainer = dom.root.querySelector('.pokemon-container');
     if (existPokemonContainer) {
         updatePokemon(existPokemonContainer, pokemonData);
     } else {
